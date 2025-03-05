@@ -2,7 +2,9 @@ type Person = {
   name: string;
   age: number;
   isStudent: boolean;
-  address: Address;
+  address?: Address; // we can make any part of an object optional
+  // but this just reduces type-safety
+  // address: Address;
 };
 
 type Address = {
@@ -10,20 +12,6 @@ type Address = {
   city: string;
   country: string;
 };
-
-// Short way of doing this
-/*
-type Person = {
-  name: string;
-  age: number;
-  isStudent: boolean;
-  address: {
-    street: string;
-    city: string;
-    country: string;
-  };
-};
-*/
 
 let person1: Person = {
   name: "John",
@@ -46,3 +34,16 @@ let person2: Person = {
     country: "Canada",
   },
 };
+
+let person3: Person = {
+  name: "Bob",
+  age: 25,
+  isStudent: true,
+};
+
+function displayInfo(person: Person) {
+  // we can add ? to indicate that the address property may be optional
+  console.log(`${person.name} lives at ${person.address?.street}.`);
+}
+
+displayInfo(person1);

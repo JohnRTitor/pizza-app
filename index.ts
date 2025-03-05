@@ -2,6 +2,11 @@ type Pizza = {
   name: string;
   price: number;
 };
+type Order = {
+  id: number;
+  pizza: Pizza;
+  status: string;
+};
 
 let menu = [
   { name: "Margherita", price: 8 },
@@ -27,7 +32,11 @@ function placeOrder(pizzaName: string) {
     return;
   }
   cashInRegister += selectedPizza.price;
-  let newOrder = { pizza: selectedPizza, status: "ordered", id: nextOrder };
+  let newOrder: Order = {
+    id: nextOrder,
+    pizza: selectedPizza,
+    status: "ordered",
+  };
   nextOrder++;
   orderQueue.push(newOrder);
   return newOrder;
