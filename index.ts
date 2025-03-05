@@ -17,7 +17,7 @@ let menu = [
 
 let nextOrder = 1;
 let cashInRegister = 100;
-let orderQueue = [];
+let orderQueue: Order[] = [];
 
 function addNewPizza(pizzaObj: Pizza) {
   menu.push(pizzaObj);
