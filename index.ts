@@ -20,17 +20,16 @@ let nextOrderId = 1;
 let cashInRegister = 100;
 let orderHistory: Order[] = [];
 
-function addNewPizza(pizzaObj: Pizza) {
+function addNewPizza(pizzaObj: Pizza): void {
   menu.push(pizzaObj);
 }
 
-function placeOrder(pizzaName: string) {
-  let selectedPizza: Pizza = menu.find(
+function placeOrder(pizzaName: string): Order | undefined {
+  const selectedPizza: Pizza | undefined = menu.find(
     (pizzaObj) => pizzaObj.name === pizzaName,
   );
   if (!selectedPizza) {
-    console.error(`Pizza ${pizzaName} not found`);
-    return;
+    throw new Error(`Pizza ${pizzaName} not found`);
   }
   cashInRegister += selectedPizza.price;
   let newOrder: Order = {
@@ -43,11 +42,12 @@ function placeOrder(pizzaName: string) {
   return newOrder;
 }
 
-function completeOrder(orderId: number) {
-  let selectedOrder = orderHistory.find((orderObj) => orderObj.id === orderId);
+function completeOrder(orderId: number): Order {
+  let selectedOrder: Order | undefined = orderHistory.find(
+    (orderObj) => orderObj.id === orderId,
+  );
   if (!selectedOrder) {
-    console.error(`Order ${orderId} not found`);
-    return;
+    throw new Error(`Order ${orderId} not found`);
   }
   selectedOrder.status = "completed";
   return selectedOrder;
@@ -55,7 +55,7 @@ function completeOrder(orderId: number) {
 
 // identifier should either be the id or name of the pizza
 // export keyword lets other modules import this function
-export function getPizzaDetail(identifier: number | string) {
+export function getPizzaDetail(identifier: number | string): Pizza | undefined {
   if (typeof identifier === "number") {
     return menu.find((pizzaObj) => pizzaObj.id === identifier);
   } else if (typeof identifier === "string") {
