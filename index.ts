@@ -53,6 +53,20 @@ function completeOrder(orderId: number) {
   return selectedOrder;
 }
 
+// identifier should either be the id or name of the pizza
+// export keyword lets other modules import this function
+export function getPizzaDetail(identifier: number | string) {
+  if (typeof identifier === "number") {
+    return menu.find((pizzaObj) => pizzaObj.id === identifier);
+  } else if (typeof identifier === "string") {
+    return menu.find(
+      (pizzaObj) => pizzaObj.name.toLowerCase() === identifier.toLowerCase(),
+    );
+  } else {
+    throw new TypeError("Parameter `identifier` must be a number or string");
+  }
+}
+
 addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12 });
 addNewPizza({ id: 6, name: "BBQ Chicken", price: 12 });
 addNewPizza({ id: 7, name: "Spicy Sausage", price: 11 });
