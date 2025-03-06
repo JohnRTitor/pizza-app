@@ -9,9 +9,9 @@ type Order = {
   status: "ordered" | "completed";
 };
 
-let nextPizzaId = 1;
-let nextOrderId = 1;
-let cashInRegister = 100;
+let nextPizzaId: number = 1;
+let nextOrderId: number = 1;
+let cashInRegister: number = 100;
 
 let menu: Pizza[] = [
   { id: nextPizzaId++, name: "Margherita", price: 8 },
@@ -22,11 +22,11 @@ let menu: Pizza[] = [
 
 let orderHistory: Order[] = [];
 
-function addNewPizza(pizzaObj: Pizza): void {
-  if (!pizzaObj.id) {
-    pizzaObj.id = nextPizzaId++;
-  }
+function addNewPizza(pizzaDetails: Omit<Pizza, "id">): Pizza {
+  // spread the pizza details into pizzaObj
+  let pizzaObj: Pizza = { id: nextPizzaId++, ...pizzaDetails };
   menu.push(pizzaObj);
+  return pizzaObj;
 }
 
 function placeOrder(pizzaName: string): Order | undefined {
